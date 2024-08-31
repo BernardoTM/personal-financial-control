@@ -11,8 +11,8 @@ class DashboardRepository:
             async with connection.transaction():
                 return await connection.fetchrow(
                     """ SELECT 
-                        SUM(CASE Quando value < 0 THEN value ELSE 0 END) AS expenses,
-                        SUM(CASE Quando value >= 0 THEN value ELSE 0 END) AS income
+                        SUM(CASE WHEN value < 0 THEN value ELSE 0 END) AS expenses,
+                        SUM(CASE WHEN value >= 0 THEN value ELSE 0 END) AS income
                     FROM "transaction"
                     WHERE user_id = $1
                         AND created_at >= $2
@@ -69,8 +69,8 @@ class DashboardRepository:
                 return await connection.fetch(
                     """ SELECT 
                             DATE_TRUNC('month', created_at) AS month,
-                            SUM(CASE Quando value < 0 THEN value ELSE 0 END) AS expenses,
-                            SUM(CASE Quando value >= 0 THEN value ELSE 0 END) AS income
+                            SUM(CASE WHEN value < 0 THEN value ELSE 0 END) AS expenses,
+                            SUM(CASE WHEN value >= 0 THEN value ELSE 0 END) AS income
                         FROM "transaction"
                         WHERE user_id = $1
                             AND created_at >= $2
@@ -92,8 +92,8 @@ class DashboardRepository:
                 return await connection.fetch(
                     """ SELECT 
                             DATE_TRUNC('month', created_at) AS month,
-                            SUM(CASE Quando value < 0 THEN value ELSE 0 END) AS expenses,
-                            SUM(CASE Quando value >= 0 THEN value ELSE 0 END) AS income
+                            SUM(CASE WHEN value < 0 THEN value ELSE 0 END) AS expenses,
+                            SUM(CASE WHEN value >= 0 THEN value ELSE 0 END) AS income
                         FROM "transaction"
                         WHERE user_id = $1
                             AND created_at >= $2
@@ -115,8 +115,8 @@ class DashboardRepository:
                 return await connection.fetch(
                     """SELECT 
                             tc.name,
-                            SUM(CASE Quando value < 0 THEN value ELSE 0 END) AS expenses,
-                            SUM(CASE Quando value >= 0 THEN value ELSE 0 END) AS income
+                            SUM(CASE WHEN value < 0 THEN value ELSE 0 END) AS expenses,
+                            SUM(CASE WHEN value >= 0 THEN value ELSE 0 END) AS income
                         FROM transaction t
                         INNER JOIN transaction_category tc ON t.transaction_category_id = tc.id
                         WHERE t.user_id = $1

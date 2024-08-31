@@ -401,7 +401,7 @@ async def create_trigger_sql():
                     IF OLD.transaction_category_id = NEW.transaction_category_id THEN
                         UPDATE budget
                         SET amount_spent = COALESCE((
-                            SELECT SUM(CASE Quando value < 0 THEN value ELSE 0 END)
+                            SELECT SUM(CASE WHEN value < 0 THEN value ELSE 0 END)
                             FROM transaction
                             WHERE transaction_category_id = OLD.transaction_category_id 
                                 AND user_id = NEW.user_id
@@ -416,7 +416,7 @@ async def create_trigger_sql():
                     IF OLD.transaction_category_id != NEW.transaction_category_id THEN
                         UPDATE budget
                         SET amount_spent = COALESCE((
-                            SELECT SUM(CASE Quando value < 0 THEN value ELSE 0 END)
+                            SELECT SUM(CASE WHEN value < 0 THEN value ELSE 0 END)
                             FROM transaction
                             WHERE transaction_category_id = OLD.transaction_category_id 
                                 AND user_id = NEW.user_id
@@ -429,7 +429,7 @@ async def create_trigger_sql():
 
                         UPDATE budget
                         SET amount_spent = COALESCE((
-                            SELECT SUM(CASE Quando value < 0 THEN value ELSE 0 END)
+                            SELECT SUM(CASE WHEN value < 0 THEN value ELSE 0 END)
                             FROM transaction
                             WHERE transaction_category_id = NEW.transaction_category_id 
                                 AND user_id = NEW.user_id
@@ -463,7 +463,7 @@ async def create_trigger_sql():
                 BEGIN
                     UPDATE budget
                     SET amount_spent = COALESCE((
-                        SELECT SUM(CASE Quando value < 0 THEN value ELSE 0 END)
+                        SELECT SUM(CASE WHEN value < 0 THEN value ELSE 0 END)
                         FROM transaction
                         WHERE transaction_category_id = NEW.transaction_category_id 
                             AND user_id = NEW.user_id
